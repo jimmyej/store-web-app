@@ -15,49 +15,39 @@ import InputText from '../../components/InputText';
 import { register } from '../../core/Auths/services';
 import { HttpStatusCode } from 'axios';
 import { useHistory } from "react-router-dom";
-
-const Copyright = () => {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="#">
-        Lincol
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Copyright from '../../components/Copyright';
 
 const theme = createTheme();
 
 const Register = () => {
     const history = useHistory();
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [firstname, setFirstname] = useState('');
-    const [lastname, setLastname] = useState('');
-    const [email, setEmail] = useState('');
+
+    const initial = {
+      firstname: '',
+      lastname: '',
+      email: '',
+      username: '',
+      password: '',
+      status: false
+    }
+
+    const [request, setRequest] = useState(initial)
+
+    const handleChange = (name, value) => {
+      setRequest({...request, [name]: value});
+    }
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const data = {
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
-        username: username,
-        password: password,
-        status: true
-    };
+    const data = {...request, "status": true};
 
     register(data).then((response) => {
-        console.log("response: ", JSON.stringify(response))
         if(response.status === HttpStatusCode.Ok) {
             console.log(response.data.message)
             history.push(`/`);
         } else {
-            console.log("Erro while registering user")
+            console.log("Error while registering user")
         }
     })
 
@@ -87,25 +77,25 @@ const Register = () => {
                 <InputText
                     id="firstname"
                     label="First Name"
-                    value={firstname}
-                    handleChange={(e) => setFirstname(e.target.value)}
+                    value={request?.firstname}
+                    handleChange={(e) => handleChange("firstname",e.target.value)}
                     focus={true}
                 />  
               </Grid>
               <Grid item xs={12} sm={6}>
                 <InputText
-                    id="lastName"
+                    id="lastname"
                     label="Last Name"
-                    value={lastname}
-                    handleChange={(e) => setLastname(e.target.value)}
+                    value={request.lastname}
+                    handleChange={(e) => handleChange("lastname",e.target.value)}
                 />  
               </Grid>
               <Grid item xs={12}>
                 <InputText
                     id="email"
                     label="Email"
-                    value={email}
-                    handleChange={(e) => setEmail(e.target.value)}
+                    value={request.email}
+                    handleChange={(e) => handleChange("email",e.target.value)}
                     type="email"
                 />  
               </Grid>
@@ -113,16 +103,16 @@ const Register = () => {
                 <InputText
                     id="username"
                     label="Username"
-                    value={username}
-                    handleChange={(e) => setUsername(e.target.value)}
+                    value={request.username}
+                    handleChange={(e) => handleChange("username",e.target.value)}
                 />  
               </Grid>
               <Grid item xs={12}>
                 <InputText
                     id="password"
                     label="Password"
-                    value={password}
-                    handleChange={(e) => setPassword(e.target.value)}
+                    value={request.password}
+                    handleChange={(e) => handleChange("password",e.target.value)}
                     type="password"
                 />  
               </Grid>
@@ -150,7 +140,7 @@ const Register = () => {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        <Copyright name="Lincol" sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );

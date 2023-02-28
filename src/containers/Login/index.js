@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-//import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
@@ -15,20 +14,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { login } from "../../core/Auths/services";
 import { useHistory } from "react-router-dom";
 import InputText from "../../components/InputText";
+import Copyright from "../../components/Copyright";
 
-const Copyright = (props) => {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © Lincol Morales"} {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-};
 
 const theme = createTheme();
 
@@ -123,7 +110,7 @@ const Login = () => {
           </Box>
         </Box>
 
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        <Copyright name="Lincol" sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
