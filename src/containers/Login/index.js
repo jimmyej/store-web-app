@@ -21,8 +21,17 @@ const theme = createTheme();
 
 const Login = () => {
   const history = useHistory();
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const goRegister = () => {
+    history.push('/register')
+  }
+
+  const goForgotPassword = () => {
+    history.push('/forgot-password')
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -97,12 +106,12 @@ const Login = () => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href="#" variant="body2" onClick={() => goForgotPassword()}>
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link variant="body2" onClick={() => goRegister()}>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

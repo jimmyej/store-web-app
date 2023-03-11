@@ -37,6 +37,10 @@ const Register = () => {
       setRequest({...request, [name]: value});
     }
 
+    const goLogin = () => {
+      history.push('/')
+    }
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -133,7 +137,7 @@ const Register = () => {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link variant="body2" onClick={() => goLogin()}>
                   Already have an account? Sign in
                 </Link>
               </Grid>
