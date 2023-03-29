@@ -1,7 +1,8 @@
 import { Delete, Send } from "@mui/icons-material";
 import { Box, Button, IconButton, Switch } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputText from "../../components/InputText";
+import { getProducts } from "../../core/Products/services";
 
 
 const Products = () => {
@@ -11,6 +12,14 @@ const Products = () => {
   //const [done, setDone] = useState(false);
 
   //const [products, setProducts] = useState([])
+  useEffect(() => {
+    getProducts().then( (response) => {
+      console.log("response", response)
+      setTasks(response.data);
+    })
+  }, [])
+  
+
 
   const handleSubmit = (e) => {
     e.preventDefault();

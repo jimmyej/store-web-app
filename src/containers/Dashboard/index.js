@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -17,6 +17,10 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './mainListItems';
 import Copyright from '../../components/Copyright';
+import { Menu, MenuItem } from '@mui/material';
+import { AccountCircle } from '@mui/icons-material';
+import { removeAll } from '../../core/Storages/LocalStorageService';
+import { useHistory } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -72,6 +76,26 @@ function DashboardContent() {
     setOpen(!open);
   };
 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const history = useHistory();
+
+  // const handleChange = (event) => {
+  //   setAuth(event.target.checked);
+  // };
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const logout = () => {
+    removeAll()
+    history.push('/login')
+  }
+
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -108,6 +132,37 @@ function DashboardContent() {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
+            <div>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={logout}>Logout</MenuItem>
+              </Menu>
+              </div>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -149,7 +204,7 @@ function DashboardContent() {
 
             </Grid>
             test
-            <Copyright sx={{ pt: 4 }} />
+            <Copyright name="Lincol" sx={{ pt: 4 }} />
           </Container>
         </Box>
       </Box>
